@@ -33,12 +33,13 @@ should be used. Start by looking at the quick start guide to get you started.
   * e.g `n/NAME [c/CLASS_NAME]` can be used as `n/John Doe c/CS1231S` or as `n/John Doe`.
 * Items with `...` after them can be used multiple times.
   * e.g. `[c/CLASS_NAME...]` can be used as ` ` (i.e. 0 times since it is also optional), `c/CS1101S`, `c/CS2030 c/ST2334` etc.
-* Parameters can be in any order.
+* Parameters, excluding the index parameter, can be in any order.
   * e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* If a parameter is expected only once in the command but you specified it multiple times, only the last occurrence of the parameter will be taken.
-  * e.g. if you specify `p/12341234 p/56785678`, only `p/56785678` will be taken.
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.
-  * e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+  * e.g. while `assign INDEX c/CLASS_NAME` is acceptable, `assign c/CLASS_NAME INDEX` is not acceptable.
+* If a parameter is expected only once in the command but you specified it multiple times, the parser takes the last occurrence of the parameter.
+  * e.g. if you specify `p/12341234 p/56785678`, the parser takes `p/56785678` only.
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) are ignored.
+  * e.g. if the command specifies `help 123`, the parser interprets it as `help`.
 
 In TA-Assist, you can switch into a mode called the **focus** mode, which lets you run tasks that are specific to (module) class. Therefore,
 [some commands](#features-available-in-focus-mode) can only be executed when you are in focus mode. Commands that you can run in the default (unfocused) mode can also
@@ -65,7 +66,7 @@ Let's first begin with the commands available in the default mode.
 | `focus`    | `focus c/CLASS_NAME`                                               |
 | `clear`    | `clear`                                                            |
 
-### Viewing help : `help`
+### View help : `help`
 
 {% include note.html content="
 
@@ -73,11 +74,12 @@ Redirects to the user guide page to provide help for the users. If attempt unsuc
 " %}
 
 ![help message](images/helpMessage.png)
+The above message emerges when the redirection failed.
 
 Format: `help`
 
 
-### Adding a student: `add`
+### Add a student: `add`
 
 {% include note.html content="
 
@@ -105,13 +107,13 @@ Edits an existing student in TA Assist.
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]`
 
 * Edits student data at the specified `INDEX`. The index refers to the index number shown in the displayed student list. The index **must be a positive integer** 1, 2, 3,…
-* Only fields that are specified will be modified.
+* Only fields that are specified are being modified.
 * At least 1 field needs to be modified.
 
 Examples:
 
-* `edit 2 n/John Doe` will change the 2nd student’s name to **John Doe.**
-* `edit 4 e/john.doe@example.com a/38 College Avenue East, 138601` will change the 4th student’s:
+* `edit 2 n/John Doe` changes the 2nd student’s name to **John Doe.**
+* `edit 4 e/john.doe@example.com a/38 College Avenue East, 138601` changes the 4th student’s:
   * E-mail to **john.doe@example.com**
   * Address to **38 College Avenue East, 138601**
 
@@ -145,14 +147,14 @@ Finds students whose names contain any of the given keywords.
 
 Format: `find KEYWORD...`
 
-* The search is case-insensitive, i.e. `Joh` will match with `john` and `JOHN`.
+* The search is case-insensitive, i.e. `Joh` matches with `john` and `JOHN`.
 * The search is performed on the current displayed list of students. 
 * To clear the current search, use the `list` command.
 
 Examples:
 
-* `find John` will find people with a **John** in their name (case-insensitive), i.e. **John Doe**, **John Brown**, **harry jOHn**, etc.
-* `find ben chris` will find people with either a **ben** or a **chris** in their name, i.e. **chris ben**, **ChRIs wonders**, **bEn ten**, etc.
+* `find John` finds people with a **John** in their name (case-insensitive), i.e. **John Doe**, **John Brown**, **harry jOHn**, etc.
+* `find ben chris` finds people with either a **ben** or a **chris** in their name, i.e. **chris ben**, **ChRIs wonders**, **bEn ten**, etc.
 * `find alex david` returns `Alex Yeoh`, `David Li`
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
@@ -167,7 +169,7 @@ Shows a list of all the students.
 Format: `list`
 
 * Note that `list` has different behavior in focus mode and outside focus mode.
-* In the focus mode, only students within the class will be listed.
+* In the focus mode, only students within the class are being listed.
 
 ### Add classes: `addc`
 
@@ -243,8 +245,6 @@ List the classes that have been created.
 
 Format: `listc`
 
-* List the classes that have been created.
-
 ### Exit the program: `exit`
 
 {% include note.html content="
@@ -269,7 +269,7 @@ Format: `focus c/CLASS_NAME`
 
 Example:
 
-* `class CS1231S` will enter focus mode to the **CS1231S** class, allowing you to manage data relating to **CS1231S**.
+* `class CS1231S` enters focus mode to the **CS1231S** class, allowing you to manage data relating to **CS1231S**.
 
 ### Clear all existing data: `clear`
 
@@ -312,7 +312,7 @@ Shows a list of all students in the class.
 Format: `list`
 
 * Note that `list` has different behavior in focus mode and outside focus mode.
-* In the focus mode, only students within the class will be listed.
+* In the focus mode, only students within the class are being listed.
 
 ### Create session: `adds`
 
@@ -324,12 +324,12 @@ Creates one or more sessions in the class.
 
 Format: `adds s/SESSION_NAME... [d/DATE]`
 
-- Creates sessions with the specified names sharing the same `DATE`. If the `DATE` field is empty, the current date will be used.
+- Creates sessions with the specified names sharing the same `DATE`. If the `DATE` field is empty, the current date is being used.
 - `DATE` field should follow the format `yyyy-MM-dd`
 
 Example:
 
-- `adds s/Lab1 s/Tutorial1 d/2022-08-11` will create sessions `Lab1` and `Tutorial1` on 11  August 2022.
+- `adds s/Lab1 s/Tutorial1 d/2022-08-11` creates sessions `Lab1` and `Tutorial1` on 11  August 2022.
 
 ### Delete sessions: `deletes`
 
@@ -362,7 +362,7 @@ Format: `grade INDEX... s/SESSION_NAME g/GRADE_VALUE`
 
 Example:
 
-* `adds s/Lab1 d/06-10-2022` followed by `grade 1 2 s/Lab1 g/93` will give the students at index 1 and 2 a grade of 93 for the session `Lab1`.
+* `adds s/Lab1 d/06-10-2022` followed by `grade 1 2 s/Lab1 g/93` gives the students at index 1 and 2 a grade of 93 for the session `Lab1`.
 
 ### Show students' grades for a session: `scores`
 
@@ -378,7 +378,7 @@ Format: `scores s/SESSION_NAME`
 
 Example:
 
-* `scores s/Assignment 1` will show the grades of all students in the class for the session `Assignment 1`, as shown below.
+* `scores s/Assignment 1` shows the grades of all students in the class for the session `Assignment 1`, as shown below.
      
   <img src="images/scoresAssignment1Result.PNG" width="600"/>
 
@@ -400,7 +400,7 @@ Format: `view INDEX`
 
 Example:
 
-* `grade 2 s/Lab1 g/93` then `view 2` will return `1. Lab1: 93`, which is the grade of the student at index 2 for the session `Lab1`.
+* `grade 2 s/Lab1 g/93` then `view 2` returns `1. Lab1: 93`, which is the grade of the student at index 2 for the session `Lab1`.
 
 ### List all sessions: `lists`
 
@@ -436,6 +436,6 @@ Format: `unfocus`
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?
+**Q**: How do I transfer my data to another computer?
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TA Assist home folder.
 
